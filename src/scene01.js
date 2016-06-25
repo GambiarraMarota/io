@@ -1,13 +1,24 @@
 var scene01 = new Scene();
 
 scene01.create = function(){
-    
-    //this.circle = new Phaser.Circle(120, 130, 100);
-}
+    this.dot = graphics.drawCircle(CANVAS_WIDTH/2,CANVAS_HEIGHT/2,35);
+    this.tap = false;
+    game.input.onTap.add(this.onTap,this);
 
+}
+scene01.update = function(){
+	if (this.tap) {
+		this.tap = false;
+		//this.dot.x = 400;
+		this.dot.moveTo(400,300);
+	}
+}
 scene01.render = function() {
-    //game.debug.geom(this.circle, '#000000');
-    cartesianPlan();
-    drawInnerCanvas();
+    createInnerCanvas();
+
 }
 
+scene01.onTap = function(){
+	this.tap = true;
+	console.log("Teste");
+}
