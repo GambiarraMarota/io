@@ -27,7 +27,11 @@ scene01.render = function() {
     
     if (this.currentState == 0) {
         this.renderHorizontalTrail();
-    } else {
+    } else if (this.currentState == 1) {
+        this.renderHorizontalTrail();
+        this.renderVerticalTrail();
+    }
+     else {
         createCartesianPlan();
     }
     
@@ -39,9 +43,14 @@ scene01.render = function() {
 scene01.renderHorizontalTrail = function() {
     graphics.lineStyle(4, 0x444444);
     graphics.moveTo(CANVAS_CENTER_X, CANVAS_CENTER_Y);
-    graphics.lineTo(CANVAS_CENTER_X + CANVAS_WIDTH / 3, CANVAS_CENTER_Y);
+    graphics.lineTo(CANVAS_CENTER_X + CANVAS_WIDTH/2, CANVAS_CENTER_Y);
 }
 
+scene01.renderVerticalTrail = function(){
+    graphics.lineStyle(4,0x444444); 
+    graphics.moveTo(CANVAS_CENTER_X,CANVAS_CENTER_Y);
+    graphics.lineTo(CANVAS_CENTER_X,CANVAS_CENTER_Y - CANVAS_HEIGHT/2);
+}
 scene01.onTap = function(){
 	this.tap = true;
 	console.log("Teste");
