@@ -7,7 +7,7 @@ function preload(){
 
 function create() {    
     graphics = game.add.graphics(0,0);
-    //initCartesianPlan();
+    initCartesianPlan();
     createInnerCanvas();
     game.stage.backgroundColor = '#cccccc';
     scenes[0].create();
