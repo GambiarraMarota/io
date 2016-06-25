@@ -2,6 +2,7 @@ function Scene() {
     this.finished = false;
     
     this.render = function() {
+        graphics.clear();
         graphics.beginFill(0xFF0000);
         graphics.drawRect(0,0,500,500);
         graphics.endFill();
