@@ -5,12 +5,12 @@ function preload(){
 
 }
 
-function create() {    
-    graphics = game.add.graphics(0,0);
-    initCartesianPlan();
-    createInnerCanvas();
+function create() {
     game.stage.backgroundColor = '#cccccc';
+    graphics = game.add.graphics(0,0);
     scenes[0].create();
+    createInnerCanvas();
+
     var length = scenes.length;
     for (var index = 0; index < length; index++){
         scenes[index].create();
