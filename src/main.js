@@ -1,28 +1,36 @@
 var game = new Phaser.Game(WINDOW_WIDTH, WINDOW_HEIGHT, Phaser.AUTO, 'main-canvas', { preload: preload, create: create, render: render, update: update });
 // cena atual que o usuário precisa percorrer
 
-var circle;
-
 function preload(){
 
 }
 
-function create() {
-
-    circle = new Phaser.Circle(120, 130, 100);
-    game.backgroundColor = '#cccccc';
-    currentScene = scene01;
-    graphics = game.add.graphics(0,0);
-
-    // inicializa create em todas as cenas
-    // for()...
+function create() {    
+    game.stage.backgroundColor = '#cccccc';
+    scenes[0].create();
+    var length = scenes.length;
+    for (var index = 0; index < length; index++){
+        scenes[index].create();
+    }
 }
 
+//TODO: generalizar funcao com o update
 function render() {
-    //game.debug.geom(circle, '#CCCCCC');
-    currentScene.render();
+    var length = scenes.length;
+    for (var index = 0; index < length; index++){
+        if (!scenes[index].finished) {
+            scenes[index].render();
+            break;
+        }
+    }
 }
 
 function update() {
-    currentScene.update();
+    var length = scenes.length;
+    for (var index = 0; index < length; index++){
+        if (!scenes[index].finished) {
+            scenes[index].update();
+            break;
+        }
+    }
 }
