@@ -1,33 +1,45 @@
 var scene01 = new Scene();
 
-scene01.create = function(){
-    this.dot = graphics.drawCircle(CANVAS_WIDTH/2,CANVAS_HEIGHT/2,35);
+scene01.create = function() {
+    this.dot = new Phaser.Circle(CANVAS_WIDTH/2, CANVAS_HEIGHT/2, 48);
+    
     this.tap = false;
+    
+    // Estados de tela para essa cena
+    this.currentState = 0;
     game.input.onTap.add(this.onTap,this);
-    createCartesianPlan();
-
 }
-scene01.update = function() {
+
+scene01.update = function() {	
+    // console.log("Vsf");
+    // Check tap
+    if (this.tap) {
+		this.tap = false;
+		this.currentState++;
+	}
+}
+
+scene01.render = function() {
     // limpa a tela
     graphics.clear();
     // desenha o canvas e o plano cartesiano
     createInnerCanvas();
-    createCartesianPlan();
     
+    if (this.currentState == 0) {
+        this.renderHorizontalTrail();
+    } else {
+        createCartesianPlan();
+    }
+    
+    // renderiza o círculo que o usuário pode controlar
     graphics.lineStyle(5, 0x29abe2);
-    graphics.drawCircle(CANVAS_WIDTH/2, CANVAS_HEIGHT/2, 64);
-	
-    console.log("Vsf");
-    // Check tap
-    if (this.tap) {
-		this.tap = false;
-		//this.dot.x = 400;
-		this.dot.moveTo(400,300);
-	}
+    graphics.drawCircle(this.dot.x, this.dot.y, this.dot.diameter);
 }
-scene01.render = function() {
-    // createInnerCanvas();
 
+scene01.renderHorizontalTrail = function() {
+    graphics.lineStyle(4, 0x444444);
+    graphics.moveTo(CANVAS_CENTER_X, CANVAS_CENTER_Y);
+    graphics.lineTo(CANVAS_CENTER_X + CANVAS_WIDTH / 3, CANVAS_CENTER_Y);
 }
 
 scene01.onTap = function(){
