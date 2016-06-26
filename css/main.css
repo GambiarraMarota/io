@@ -26,15 +26,15 @@ body{
     font-size: 3em;
 }
 
+
+.footer-text{
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 2em;
+}
 .game canvas {
     margin: 0 auto !important;
 }
 
-.card-profile{
-    height: 300px;
-    opacity: 0.5;
-    background-color: red;
-    width: 95%;
-    margin:1.25%;
-    box-sizing: border-box;
+.footer{
+    margin-top:50px;
 }
