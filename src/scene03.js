@@ -1,5 +1,7 @@
 var scene03 = new Scene();
 scene02.finished = true;
+var textR;
+
 scene03.create = function(){
 	this.dot = new Phaser.Circle(75+CANVAS_WIDTH/2,-75 + CANVAS_HEIGHT/2,8);
 	this.tap = false;
@@ -45,6 +47,7 @@ scene03.renderHorizontalTrail = function() {
     if (this.currentState == 2) {
     	graphics.lineTo(this.dot.x + 50, this.dot.y);
 		graphics.drawCircle(this.dot.x,this.dot.y,this.dot.diameter);
+    	this.textR = game.add.text(this.dot.x + this.dot.diameter/2,this.dot.y + this.dot.diameter/2,"R", { font: "15px Arial", fill: "#000000", align: "center" });
     }
     if (this.currentState >= 3) {
 		graphics.lineTo(this.dot.x + 50, this.dot.y);
