@@ -53,9 +53,9 @@ scene02.drawDottedBox = function(clicked){
 
 scene02.onTap = function(){
     this.tap = true;
-    if(typeof textX != "undefined"){
-        this.prepareToDrag();    
-    }
+    
+    this.prepareToDrag();    
+
     
 }
 
