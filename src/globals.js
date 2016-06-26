@@ -16,13 +16,19 @@ var graphics;
 var canvasRect;
 
 function createCartesianPlan() {
-    graphics.lineStyle(5, 0xff9f00);
-    graphics.moveTo(CANVAS_ORIGIN_X, CANVAS_HEIGHT/2);
+    graphics.lineStyle(1,0x444444);
+    graphics.moveTo(CANVAS_ORIGIN_X,CANVAS_CENTER_Y);
+    graphics.lineTo(CANVAS_CENTER_X, CANVAS_CENTER_Y);
+    graphics.moveTo(CANVAS_CENTER_X,CANVAS_HEIGHT);
+    graphics.lineTo(CANVAS_CENTER_X,CANVAS_CENTER_Y);
+
+    graphics.lineStyle(4, 0xff9f00);
+    graphics.moveTo(CANVAS_CENTER_X, CANVAS_HEIGHT/2);
     graphics.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT/2);
     
-    graphics.lineStyle(5, 0xcc6633);
-    graphics.moveTo(CANVAS_WIDTH/2, CANVAS_ORIGIN_Y);
-    graphics.lineTo(CANVAS_WIDTH/2, CANVAS_HEIGHT);
+    graphics.lineStyle(4, 0xcc6633);
+    graphics.moveTo(CANVAS_WIDTH/2, CANVAS_CENTER_Y);
+    graphics.lineTo(CANVAS_WIDTH/2, CANVAS_HEIGHT*(-1));
 }
 
 
