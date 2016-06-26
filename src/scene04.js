@@ -22,6 +22,7 @@ scene04.update = function(){
 	if (this.tap) {
 		this.tap = false;
 		this.currentState++;
+
 	}
 }
 
