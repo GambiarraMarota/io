@@ -8,6 +8,7 @@
     <script type="text/javascript" src="src/scene.js"></script>
     <script type="text/javascript" src="src/scene01.js"></script>
     <script type="text/javascript" src="src/scene02.js"></script>
+    <script type="text/javascript" src="src/scene03.js"></script>
     <script type="text/javascript" src="src/globals.js"></script>
     <script type="text/javascript" src="src/main.js"></script>
 
@@ -17,41 +18,42 @@
 </head>
 <body>
 
-    <div class="container">
-        <!--Header content. Menu and logo here-->
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="hero-content header">
-                    <figure>
-                        <img src="static/marca_io-01.png" alt="">
-                        <figcaption>
-                            <h1 class="">io</h1>
-                            <hr>
-                            <p>Learn to play</p>
-                        </figcaption>
-                    </figure>
-                </div>
-            </div>
-        </div>
-        <!--End Header-->
+        <nav>
+            <ul>
+                <li>a</li>
+            </ul>
+        </nav>
 
-        <!--Canvas Game go here.-->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="hero-content game" id="main-canvas"></div>
+            <!--Header content. Menu and logo here-->
+            <div class="col-lg-12 hero-content header">
+                <figure class="center-block">
+                    <img src="static/marca_io-01.png" class="center-block" alt="">
+                    <figcaption>
+                        <h1 class="text-center">io</h1>
+                        <p class="text-center">Learn to play</p>
+                        <hr>
+                    </figcaption>
+                </figure>
             </div>
-        </div>
-        <!---->
+            <!--End Header-->
 
-        <!--Team info go here-->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="hero-content team">content</div>
+            <!--Canvas Game go here.-->
+            <div class="col-lg-12 hero-content game">
+                <div id="main-canvas"></div>
             </div>
+            <!---->
+
+            <!--Team info go here-->
+            <div class="col-lg-12 hero-content team">
+                content
+            </div>
+            <!---->
         </div>
-        <!---->
     </div>
 
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>
