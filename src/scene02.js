@@ -9,7 +9,6 @@ var ready = 0;
 scene02.create = function() {
     this.firstPass = true;
     clicked = false;
-    scene01.finished = true;
     this.tap = false;
     game.input.onTap.add(this.onTap,this);
 }
@@ -54,7 +53,10 @@ scene02.drawDottedBox = function(clicked){
 
 scene02.onTap = function(){
     this.tap = true;
-    this.prepareToDrag();
+    if(typeof textX != "undefined"){
+        this.prepareToDrag();    
+    }
+    
 }
 
 scene02.prepareToDrag = function(){
