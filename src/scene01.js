@@ -62,8 +62,8 @@ scene01.render = function() {
         this.renderHorizontalTrail();
         this.renderVerticalTrail();
     } else {
-        createCartesianPlan();
         this.finished = true;
+        createCartesianPlan();
     }
     
     // círculos alvo
