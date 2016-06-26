@@ -15,6 +15,16 @@ scene02.render = function() {
     createCartesianPlan();
     if (this.currentState == 0){
         this.createCoordText();
+        this.retangulo.y = CANVAS_ORIGIN_Y + this.margin + Math.sin(game.time.totalElapsedSeconds() * 6) * 10;
+    } else if (this.currentState == 1) {
+        if (this.textX.anim == true) {
+            // this.textX.y = CANVAS_HEIGHT/2 + 16 + Math.sin(game.time.totalElapsedSeconds() * 6) * 6;
+        }
+        if (this.textY.anim == true) {
+            // this.textY.y = CANVAS_ORIGIN_Y + 80 + Math.sin(game.time.totalElapsedSeconds() * 6) * 6;
+        }
+    } else if (this.currentState == 2) {
+        
     }
 }
 
@@ -41,7 +51,9 @@ scene02.input = function(){
 scene02.createCoordText = function(){
     if (this.firstPass){
         this.textX = game.add.text(CANVAS_WIDTH - 132, CANVAS_HEIGHT/2 + 16, "X", { font: "24px Revalia", fill: X_COLOR_STR, align: "center" });
+        this.textX.anim = true;
         this.textY = game.add.text(CANVAS_WIDTH/2+24, CANVAS_ORIGIN_Y + 80, "Y", { font: "24px Revalia", fill: Y_COLOR_STR, align: "center" });
+        this.textY.anim = true;
         this.firstPass = false;
     }
 }
@@ -53,7 +65,7 @@ scene02.drawDottedBox = function(clicked){
     } else {
         graphics.lineStyle(5, 0xFFd700, 1);
     }
-    this.dottedBox = graphics.drawRect(CANVAS_WIDTH + this.margin,CANVAS_ORIGIN_Y + this.margin, 100, CANVAS_HEIGHT/3 - this.margin);    
+    this.dottedBox = graphics.drawRect(this.retangulo.x, this.retangulo.y, 100, CANVAS_HEIGHT/3 - this.margin);    
 }
 
 scene02.drawReadyBox = function(){
@@ -94,6 +106,7 @@ scene02.out = function(item){
             this.textX.isInTheBox = true;
             this.textX.x = this.retangulo.x + 12;
             this.textX.y = this.retangulo.y + 12;
+            this.textX.anim = false;
         } else if (item == this.textY && this.textY.isInTheBox != true) {
             this.textY.setStyle(b);
             this.textY.input.disableDrag();
@@ -102,6 +115,7 @@ scene02.out = function(item){
             this.textY.isInTheBox = true;
             this.textY.x = this.retangulo.x + 36;
             this.textY.y = this.retangulo.y + 12;
+            this.textY.anim = false;
         }
     }
 }

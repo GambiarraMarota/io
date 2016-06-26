@@ -1,5 +1,5 @@
 var scene03 = new Scene();
-var textR;
+// var textR;
 var piStep1QuadOk = false;
 var piStep1RadiansAtan2;
 
@@ -19,6 +19,9 @@ scene03.create = function(){
     this.parte2X;
     this.parte2Y;
     this.retangulo = new Phaser.Rectangle(CANVAS_WIDTH + scene02.margin,CANVAS_ORIGIN_Y + scene02.margin, 100, CANVAS_HEIGHT/3 - scene02.margin);
+    
+    this.textR = game.add.text(this.initialX + this.dot.diameter/2,this.initialY + this.dot.diameter/2,"R", { font: "24px Revalia", fill: "#000000", align: "center" });
+    this.textR.alpha = 0;
 }
 
 scene03.input = function(){
@@ -107,7 +110,8 @@ scene03.renderHorizontalTrail = function() {
     graphics.moveTo(this.initialX, this.initialY);
     graphics.lineTo(this.initialX + 100, this.initialY);
     //graphics.drawCircle(this.initialX,this.initialY,this.dot.diameter);
-    this.textR = game.add.text(this.initialX + this.dot.diameter/2,this.initialY + this.dot.diameter/2,"R", { font: "15px Arial", fill: "#000000", align: "center" });
+    this.textR.alpha = 1;
+    // this.textR = game.add.text(this.initialX + this.dot.diameter/2,this.initialY + this.dot.diameter/2,"R", { font: "24px Revalia", fill: "#000000", align: "center" });
     this.renderDot();
 }
 
