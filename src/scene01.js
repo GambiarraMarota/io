@@ -130,7 +130,7 @@ scene01.renderHorizontalPreTrail = function(){
     graphics.moveTo(CANVAS_CENTER_X, CANVAS_CENTER_Y);
     graphics.lineTo(CANVAS_WIDTH - 96 , CANVAS_CENTER_Y);
     //traços verticais pra artificiar o pontilhado,tentei usando for mas nao funcionou #HARDCODE!
-    graphics.lineStyle(20,0xcccccc);
+    graphics.lineStyle(20,0xF0F0F0);
     graphics.moveTo(CANVAS_CENTER_X + 50,CANVAS_CENTER_Y - 50);
     graphics.lineTo(CANVAS_CENTER_X + 50,CANVAS_CENTER_Y + 50);
     graphics.moveTo(CANVAS_CENTER_X + 115,CANVAS_CENTER_Y - 50);
@@ -153,7 +153,7 @@ scene01.renderVerticalPreTrail = function(){
     graphics.lineTo(CANVAS_CENTER_X,64);
 
     //traços horizontais pra artificar o pontilhado
-    graphics.lineStyle(20,0xcccccc);
+    graphics.lineStyle(20,0xF0F0F0);
     graphics.moveTo(CANVAS_CENTER_X - 50,CANVAS_CENTER_Y - 50);
     graphics.lineTo(CANVAS_CENTER_X + 50,CANVAS_CENTER_Y - 50);
     graphics.moveTo(CANVAS_CENTER_X - 50,CANVAS_CENTER_Y - 100);

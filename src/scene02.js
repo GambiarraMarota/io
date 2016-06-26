@@ -40,8 +40,8 @@ scene02.input = function(){
 //TODO: mudar numero mágico
 scene02.createCoordText = function(){
     if (this.firstPass){
-        this.textX = game.add.text(CANVAS_WIDTH-15, CANVAS_HEIGHT/2, "X", { font: "15px Arial", fill: "#000000", align: "center" });
-        this.textY = game.add.text(CANVAS_WIDTH/2+5, CANVAS_ORIGIN_Y, "Y", { font: "15px Arial", fill: "#000000", align: "center" });
+        this.textX = game.add.text(CANVAS_WIDTH - 132, CANVAS_HEIGHT/2 + 16, "X", { font: "24px Revalia", fill: X_COLOR_STR, align: "center" });
+        this.textY = game.add.text(CANVAS_WIDTH/2+24, CANVAS_ORIGIN_Y + 80, "Y", { font: "24px Revalia", fill: Y_COLOR_STR, align: "center" });
         this.firstPass = false;
     }
 }
@@ -68,7 +68,7 @@ scene02.prepareToDrag = function(){
         this.currentState = 1;    
     }
     //muda a cor da fonte para ajudar a ver o drag and drop
-    var a = { font: "15px Arial", fill: '#FFFF00', align: "center" };
+    var a = { font: "24px Revalia", fill: '#FFFF00', align: "center" };
     this.textX.setStyle(a);
     this.textY.setStyle(a);
 
@@ -84,18 +84,24 @@ scene02.dragText = function(text){
 }
 
 scene02.out = function(item){
-    var b = { font: "15px Arial", fill: '#00FF00', align: "center" };
+    var b = { font: "24px Revalia", fill: '#00FF00', align: "center" };
     if (this.retangulo.contains(item.x,item.y)){
-        if(item == this.textX){
+        if(item == this.textX && this.textX.isInTheBox != true){
             this.textX.setStyle(b);
             this.textX.input.disableDrag();
-            this.textX2 = game.add.text(CANVAS_WIDTH-15, CANVAS_HEIGHT/2, "X", { font: "15px Arial", fill: "#000000", align: "center" });
+            this.textX2 = game.add.text(CANVAS_WIDTH - 132, CANVAS_HEIGHT/2 + 16, "X", { font: "24px Revalia", fill: X_COLOR_STR, align: "center" });
             this.currentState++;
-        } else {
+            this.textX.isInTheBox = true;
+            this.textX.x = this.retangulo.x + 12;
+            this.textX.y = this.retangulo.y + 12;
+        } else if (item == this.textY && this.textY.isInTheBox != true) {
             this.textY.setStyle(b);
             this.textY.input.disableDrag();
-            this.textY2 = game.add.text(CANVAS_WIDTH/2+5, CANVAS_ORIGIN_Y, "Y", { font: "15px Arial", fill: "#000000", align: "center" });
+            this.textY2 = game.add.text(CANVAS_WIDTH/2+24, CANVAS_ORIGIN_Y + 80, "Y", { font: "24px Revalia", fill: Y_COLOR_STR, align: "center" });
             this.currentState++;
+            this.textY.isInTheBox = true;
+            this.textY.x = this.retangulo.x + 36;
+            this.textY.y = this.retangulo.y + 12;
         }
     }
 }

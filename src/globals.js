@@ -15,6 +15,50 @@ var CANVAS_CENTER_Y = CANVAS_HEIGHT/2;
 var graphics;	
 var canvasRect;
 
+var X_COLOR = 0xff9f00;
+var Y_COLOR = 0xcc6633;
+var X_COLOR_STR = "#FF9F00";
+var Y_COLOR_STR = "#CC6633";
+
+WebFontConfig = {
+
+    //  'active' means all requested fonts have finished loading
+    //  We set a 1 second delay before calling 'createText'.
+    //  For some reason if we don't the browser cannot render the text the first time it's created.
+    active: function() { game.time.events.add(Phaser.Timer.SECOND, createText, this); },
+
+    //  The Google Fonts we want to load (specify as many as you like in the array)
+    google: {
+      families: ['Revalia']
+    }
+
+};
+
+var text = null;
+var grd;
+
+function createText() {
+    // text = game.add.text(game.world.centerX, game.world.centerY, "- phaser -\nrocking with\ngoogle web fonts");
+    text.anchor.setTo(0.5);
+
+    text.font = 'Revalia';
+    text.fontSize = 60;
+
+    //  x0, y0 - x1, y1
+    grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
+    grd.addColorStop(0, '#8ED6FF');   
+    grd.addColorStop(1, '#004CB3');
+    text.fill = grd;
+
+    text.align = 'center';
+    text.stroke = '#000000';
+    text.strokeThickness = 2;
+    text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+
+    text.inputEnabled = true;
+    text.input.enableDrag();
+}
+
 function createCartesianPlan() {
     graphics.lineStyle(1,0x444444);
     graphics.moveTo(CANVAS_ORIGIN_X,CANVAS_CENTER_Y);
@@ -22,10 +66,12 @@ function createCartesianPlan() {
     graphics.moveTo(CANVAS_CENTER_X, CANVAS_HEIGHT);
     graphics.lineTo(CANVAS_CENTER_X, CANVAS_ORIGIN_Y);
 
+    // EIXO X
     graphics.lineStyle(4, 0xff9f00);
     graphics.moveTo(CANVAS_CENTER_X, CANVAS_HEIGHT/2);
     graphics.lineTo(CANVAS_WIDTH - 96, CANVAS_HEIGHT/2);
     
+    // EIXO Y
     graphics.lineStyle(4, 0xcc6633);
     // graphics.moveTo(CANVAS_WIDTH/2, CANVAS_CENTER_Y);
     // graphics.lineTo(CANVAS_WIDTH/2, CANVAS_HEIGHT*(-1));

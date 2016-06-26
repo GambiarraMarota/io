@@ -57,6 +57,7 @@ scene03.input = function(){
                 this.dot.y = this.parte2Y;
                 this.dot.isMoving = false;
                 piTransition = true;
+                this.touchingScreen = false;
             }
         }  
     } else if (this.circulo.isMoving){

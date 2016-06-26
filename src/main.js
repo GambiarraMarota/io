@@ -6,6 +6,9 @@ function preload(){
 }
 
 function create() {
+    //  Load the Google WebFont Loader script
+    game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+
     game.stage.backgroundColor = '#f0f0f0';
     graphics = game.add.graphics(0,0);
     scenes[0].create();
