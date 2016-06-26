@@ -1,7 +1,6 @@
 var scene02 = new Scene();
 
 scene02.create = function() {
-    scene01.finished = true;
     this.margin = 30;
     this.currentState = 0;
     this.firstPass = true;
