@@ -1,31 +1,41 @@
 var scene02 = new Scene();
 
-var textX;
-var textY;
-var dottedBox;
-var clicked;
-var ready = 0;
-
 scene02.create = function() {
+    scene01.finished = true;
+    this.margin = 30;
+    this.currentState = 0;
     this.firstPass = true;
-    clicked = false;
-    this.tap = false;
-    game.input.onTap.add(this.onTap,this);
+    game.input.onDown.add(this.onTouchDown, this);
+    game.input.onUp.add(this.onTouchUp, this);
+    this.touchingScreen = false;
+    this.retangulo = new Phaser.Rectangle(CANVAS_WIDTH + this.margin,CANVAS_ORIGIN_Y + this.margin, 100, CANVAS_HEIGHT/3 - this.margin);
 }
-
 scene02.render = function() {
     graphics.clear();
-    this.createCoordText();
     createInnerCanvas();
     createCartesianPlan();
-    this.drawDottedBox(clicked);
+    if (this.currentState == 0){
+        this.createCoordText();
+    }
 }
 
 scene02.update = function() {
-    if (this.tap) {
-        this.tap = false;
+    this.input();
+    if(this.currentState == 0){
+        this.drawDottedBox(false);
+    } else if(this.currentState <= 2){
+        this.drawDottedBox(true);
+    } else if(this.currentState >= 3){
+        this.drawReadyBox();
     }
-    console.log("teste");
+}
+
+scene02.input = function(){
+    if (this.currentState == 0 && this.touchingScreen) {
+        if(this.retangulo.contains(game.input.position.x, game.input.position.y)){
+            this.prepareToDrag();
+        }
+    }
 }
 
 //TODO: mudar numero mágico
@@ -38,30 +48,26 @@ scene02.createCoordText = function(){
 }
 
 scene02.drawDottedBox = function(clicked){
-    var margin = 30
+    
     if (!clicked){
         graphics.lineStyle(1, 0xFF0000, 1);
-    } else if (clicked && (ready >= 2)){
-        graphics.lineStyle(1, 0x00FF00, 1);
-        this.finished = true;
     } else {
         graphics.lineStyle(1, 0xFFFF00, 1);
     }
-    dottedBox = graphics.drawRect(CANVAS_WIDTH + margin,CANVAS_ORIGIN_Y + margin, 100, CANVAS_HEIGHT/3 - margin);
-    retangulo = new Phaser.Rectangle(CANVAS_WIDTH + margin,CANVAS_ORIGIN_Y + margin, 100, CANVAS_HEIGHT/3 - margin);
+    this.dottedBox = graphics.drawRect(CANVAS_WIDTH + this.margin,CANVAS_ORIGIN_Y + this.argin, 100, CANVAS_HEIGHT/3 - this.margin);    
 }
 
-scene02.onTap = function(){
-    this.tap = true;
-    
-    this.prepareToDrag();    
-
-    
+scene02.drawReadyBox = function(){
+    graphics.lineStyle(1, 0x00FF00, 1);
+    this.dottedBox = graphics.drawRect(CANVAS_WIDTH + this.margin,CANVAS_ORIGIN_Y + this.argin, 100, CANVAS_HEIGHT/3 - this.margin);    
+    this.finished = true;
 }
+
 
 scene02.prepareToDrag = function(){
-    clicked = true;
-
+    if (this.currentState < 1){
+        this.currentState = 1;    
+    }
     //muda a cor da fonte para ajudar a ver o drag and drop
     var a = { font: "15px Arial", fill: '#FFFF00', align: "center" };
     this.textX.setStyle(a);
@@ -75,27 +81,30 @@ scene02.prepareToDrag = function(){
 scene02.dragText = function(text){
     text.inputEnabled = true;
     text.input.enableDrag();
-
-    //text.events.onInputOver.add(over, this);
     text.events.onInputOut.add(this.out, this);
-
-    //text.events.onInputDown.add(down, this);
-   // text.events.onInputUp.add(this.up, this);
 }
 
 scene02.out = function(item){
     var b = { font: "15px Arial", fill: '#00FF00', align: "center" };
-    if (retangulo.contains(item.x,item.y)){
+    if (this.retangulo.contains(item.x,item.y)){
         if(item == this.textX){
             this.textX.setStyle(b);
             this.textX.input.disableDrag();
             this.textX2 = game.add.text(CANVAS_WIDTH-15, CANVAS_HEIGHT/2, "X", { font: "15px Arial", fill: "#000000", align: "center" });
-            ready++;
+            this.currentState++;
         } else {
             this.textY.setStyle(b);
             this.textY.input.disableDrag();
             this.textY2 = game.add.text(CANVAS_WIDTH/2+5, CANVAS_ORIGIN_Y, "Y", { font: "15px Arial", fill: "#000000", align: "center" });
-            ready++;
+            this.currentState++;
         }
     }
+}
+
+scene02.onTouchDown = function(item){
+    this.touchingScreen = true;
+}
+
+scene02.onTouchUp = function(item){
+    this.touchingScreen = false;
 }
