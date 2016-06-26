@@ -14,6 +14,9 @@ scene03.update = function(){
 		this.tap = false;
 		this.currentState++;
 	}
+	if (this.currentState > 3) {
+		this.finished = true;
+	}
 }
 
 scene03.render = function(){
