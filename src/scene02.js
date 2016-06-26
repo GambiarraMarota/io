@@ -53,12 +53,12 @@ scene02.drawDottedBox = function(clicked){
     } else {
         graphics.lineStyle(5, 0xFFd700, 1);
     }
-    this.dottedBox = graphics.drawRect(CANVAS_WIDTH + this.margin,CANVAS_ORIGIN_Y + this.argin, 100, CANVAS_HEIGHT/3 - this.margin);    
+    this.dottedBox = graphics.drawRect(CANVAS_WIDTH + this.margin,CANVAS_ORIGIN_Y + this.margin, 100, CANVAS_HEIGHT/3 - this.margin);    
 }
 
 scene02.drawReadyBox = function(){
     graphics.lineStyle(1, 0x00FF00, 1);
-    this.dottedBox = graphics.drawRect(CANVAS_WIDTH + this.margin,CANVAS_ORIGIN_Y + this.argin, 100, CANVAS_HEIGHT/3 - this.margin);    
+    this.dottedBox = graphics.drawRect(CANVAS_WIDTH + this.margin,CANVAS_ORIGIN_Y + this.margin, 100, CANVAS_HEIGHT/3 - this.margin);    
     this.finished = true;
 }
 
