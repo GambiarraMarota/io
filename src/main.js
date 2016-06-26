@@ -6,7 +6,7 @@ function preload(){
 }
 
 function create() {
-    game.stage.backgroundColor = '#cccccc';
+    game.stage.backgroundColor = '#f0f0f0';
     graphics = game.add.graphics(0,0);
     scenes[0].create();
 
