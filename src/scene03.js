@@ -1,8 +1,11 @@
 var scene03 = new Scene();
 var textR;
+var piStep1QuadOk = false;
+var piStep1RadiansAtan2;
 
 scene03.create = function(){
-
+    scene02.finished = true;
+    scene01.finished = true;
     this.dot = new Phaser.Circle(75+CANVAS_WIDTH/2,-75 + CANVAS_HEIGHT/2,8);
 	//this.tap = false;
     this.initialX = this.dot.x;
@@ -13,6 +16,7 @@ scene03.create = function(){
     game.input.onDown.add(this.onTouchDown, this);
     game.input.onUp.add(this.onTouchUp, this);
     this.touchingScreen = false;
+    piStep1RadiansAtan2 =0;
 }
 
 scene03.input = function(){
@@ -35,13 +39,53 @@ scene03.input = function(){
         if (this.currentState == 0) {
             if (game.input.position.x <= this.initialX + 100  && game.input.position.x >= this.initialX){
                 this.dot.x = game.input.position.x;    
-            }
-
-            
+            }        
         } else if (this.currentState == 1) {
             //this.dot.y = game.input.position.y;
-            this.dot.y = Math.sin(game.input.position.y)*100+this.initialY;
-            this.dot.x = Math.cos(game.input.position.x)*100+this.initialX;
+            //this.dot.y = Math.sin(game.input.position.y)*100+this.initialY;
+            //this.dot.x = Math.cos(game.input.position.x)*100+this.initialX;
+            var tmp;
+            //tmp = Math.atan2(game.input.position.y - this.initialY, game.input.position.x - this.initialX);
+            if(!piStep1QuadOk){
+                tmp = Phaser.Math.clamp(Math.atan2(game.input.position.y - this.initialY, game.input.position.x - this.initialX), -Math.PI, 0);
+            } else {
+                tmp = Math.atan2(game.input.position.y - this.initialY, game.input.position.x - this.initialX);
+            }
+            if (tmp < -3) {
+                piStep1QuadOk = true;
+            } else if (tmp < 0) {
+                piStep1QuadOk = false;
+            }
+            /*
+            if (!piStep1QuadOk) {
+                tmp = Phaser.Math.clamp(Math.atan2(game.input.position.y, game.input.position.x), -Math.PI, 0);
+            } else {
+                tmp = Math.atan2(game.input.position.y, game.input.position.x);
+            }
+            if (tmp < -3) {
+                piStep1QuadOk = true;
+            } else if (tmp < 0) {
+                piStep1QuadOk = false;
+            }
+            */
+            console.log(tmp);
+            piStep1RadiansAtan2 = tmp;
+            this.dot.x = Math.cos(piStep1RadiansAtan2) * 100 + this.initialX;
+            this.dot.y = Math.sin(piStep1RadiansAtan2) * 100 + this.initialY;
+            
+            if (piStep1QuadOk && piStep1RadiansAtan2 < .2 && piStep1RadiansAtan2 > 0) {
+                this.currentState++;
+                //pointerGrabbed = false;
+                this.dot.isMoving = false;
+                piTransition = true;
+            } else {
+                //this.dot.x = this.initialX;
+                //this.dot.y = this.initialY;
+                //piStep1RadiansAtan2 = 0;
+                //piStep1QuadOk = false;
+                
+                //this.currentState = 0;
+            }
         }
     }
 }
@@ -98,6 +142,10 @@ scene03.renderCircle = function() {
     graphics.lineTo(this.initialX + 100, this.initialY);
     graphics.drawCircle(this.initialX,this.initialY,this.dot.diameter);
     graphics.drawCircle(this.initialX,this.initialY,200);
+    //graphics.moveTo(piStep0InitialPoint.x, piStep0InitialPoint.y);
+    //graphics.lineTo(currentCursorPoint.x, currentCursorPoint.y);
+    graphics.lineStyle(8,0x000000);
+    graphics.arc(this.initialX, this.initialY, 100, 0, piStep1RadiansAtan2, true);
 }
 
 /*scene03.onTap = function(){
