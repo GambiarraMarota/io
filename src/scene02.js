@@ -34,6 +34,11 @@ scene02.update = function() {
         this.drawDottedBox(false);
     } else if(this.currentState <= 2){
         this.drawDottedBox(true);
+        if (this.textX.isMoving) {
+            this.textX.x = Phaser.Math.linear(this.textX.x, this.retangulo.x + 12, .05);
+            this.textX.y = Phaser.Math.linear(this.textX.y, this.retangulo.y + 12, .05);
+            this.out(this.textX);
+        }
     } else if(this.currentState >= 3){
         this.drawReadyBox();
     }
@@ -52,6 +57,7 @@ scene02.createCoordText = function(){
     if (this.firstPass){
         this.textX = game.add.text(CANVAS_WIDTH - 132, CANVAS_HEIGHT/2 + 16, "X", { font: "24px Revalia", fill: X_COLOR_STR, align: "center" });
         this.textX.anim = true;
+        this.textX.isMoving = true;
         this.textY = game.add.text(CANVAS_WIDTH/2+24, CANVAS_ORIGIN_Y + 80, "Y", { font: "24px Revalia", fill: Y_COLOR_STR, align: "center" });
         this.textY.anim = true;
         this.firstPass = false;
@@ -107,6 +113,7 @@ scene02.out = function(item){
             this.textX.x = this.retangulo.x + 12;
             this.textX.y = this.retangulo.y + 12;
             this.textX.anim = false;
+            this.textX.isMoving = false;
         } else if (item == this.textY && this.textY.isInTheBox != true) {
             this.textY.setStyle(b);
             this.textY.input.disableDrag();

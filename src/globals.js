@@ -1,4 +1,4 @@
-var scenes = [scene01, scene02, scene03, scene04];
+var scenes = [scene01, scene02, scene03, /*scene04*/];
 
 var WINDOW_WIDTH = 1024;
 var WINDOW_HEIGHT = 576;
