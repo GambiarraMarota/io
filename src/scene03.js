@@ -1,5 +1,4 @@
 var scene03 = new Scene();
-scene02.finished = true;
 var textR;
 
 scene03.create = function(){

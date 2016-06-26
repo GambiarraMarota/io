@@ -1,4 +1,4 @@
-var scenes = [scene01, scene02];
+var scenes = [scene01, scene02, scene03];
 
 var WINDOW_WIDTH = 1024;
 var WINDOW_HEIGHT = 576;
@@ -12,7 +12,7 @@ var CANVAS_ORIGIN_Y = 0;
 var CANVAS_CENTER_X = CANVAS_WIDTH/2;
 var CANVAS_CENTER_Y = CANVAS_HEIGHT/2;
 
-var graphics;
+var graphics;	
 var canvasRect;
 
 function createCartesianPlan() {
