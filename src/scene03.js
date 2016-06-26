@@ -2,8 +2,6 @@ var scene03 = new Scene();
 var textR;
 
 scene03.create = function(){
-	scene01.finished = true;
-    //scene02.finished = true
 
     this.dot = new Phaser.Circle(75+CANVAS_WIDTH/2,-75 + CANVAS_HEIGHT/2,8);
 	//this.tap = false;
