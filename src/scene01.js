@@ -57,35 +57,65 @@ scene01.render = function() {
     createInnerCanvas();
     
     if (this.currentState == 0) {
-        this.renderHorizontalTrail();
+        this.renderHorizontalPreTrail();
     } else if (this.currentState == 1) {
         this.renderHorizontalTrail();
-        this.renderVerticalTrail();
-    } else {
+        this.renderVerticalPreTrail();
+    }else {
         this.finished = true;
         createCartesianPlan();
     }
     
     // círculos alvo
-    graphics.lineStyle(5, this.currentState == 0 ? 0x99aabb : this.targetDotX.color);
+    graphics.lineStyle(5, this.currentState == 0 ? 0x99aabb : 0xcccccc);
     graphics.drawCircle(this.targetDotX.x, this.targetDotX.y, this.targetDotX.diameter);
     
-    graphics.lineStyle(5, this.currentState <= 1 ? 0x99aabb : this.targetDotY.color);
+    graphics.lineStyle(5, this.currentState <= 1 ? 0x99aabb : 0xcccccc);
     graphics.drawCircle(this.targetDotY.x, this.targetDotY.y, this.targetDotY.diameter);
     
     // renderiza o círculo que o usuário pode controlar
     graphics.lineStyle(5, 0x29abe2);
     graphics.drawCircle(this.dot.x, this.dot.y, this.dot.diameter);
+    graphics.lineStyle(20,0x29abe2);
+    graphics.drawCircle(this.dot.x, this.dot.y, this.dot.diameter/5);
 }
-
-scene01.renderHorizontalTrail = function() {
-    graphics.lineStyle(4, 0x444444);
+scene01.renderHorizontalPreTrail = function(){
+    graphics.lineStyle(4,0x444444);
     graphics.moveTo(CANVAS_CENTER_X, CANVAS_CENTER_Y);
-    graphics.lineTo(CANVAS_CENTER_X + CANVAS_WIDTH/2, CANVAS_CENTER_Y);
+    graphics.lineTo(CANVAS_WIDTH - 96 , CANVAS_CENTER_Y);
+    //traços verticais pra artificiar o pontilhado,tentei usando for mas nao funcionou #HARDCODE!
+    graphics.lineStyle(20,0xcccccc);
+    graphics.moveTo(CANVAS_CENTER_X + 50,CANVAS_CENTER_Y - 50);
+    graphics.lineTo(CANVAS_CENTER_X + 50,CANVAS_CENTER_Y + 50);
+    graphics.moveTo(CANVAS_CENTER_X + 115,CANVAS_CENTER_Y - 50);
+    graphics.lineTo(CANVAS_CENTER_X + 115,CANVAS_CENTER_Y + 50);
+    graphics.moveTo(CANVAS_CENTER_X + 180,CANVAS_CENTER_Y - 50);
+    graphics.lineTo(CANVAS_CENTER_X + 180,CANVAS_CENTER_Y + 50);
+    
 }
-
-scene01.renderVerticalTrail = function(){
+scene01.renderHorizontalTrail = function() {
+    graphics.lineStyle(4, 0xff9f00);
+    graphics.moveTo(CANVAS_CENTER_X, CANVAS_CENTER_Y);
+    graphics.lineTo(CANVAS_WIDTH - 96, CANVAS_CENTER_Y);
+        
+}
+scene01.renderVerticalPreTrail = function(){
     graphics.lineStyle(4,0x444444); 
+    graphics.moveTo(CANVAS_CENTER_X,CANVAS_CENTER_Y);
+    graphics.lineTo(CANVAS_CENTER_X,64);
+
+    //traços horizontais pra artificar o pontilhado
+    graphics.lineStyle(20,0xcccccc);
+    graphics.moveTo(CANVAS_CENTER_X - 50,CANVAS_CENTER_Y - 50);
+    graphics.lineTo(CANVAS_CENTER_X + 50,CANVAS_CENTER_Y - 50);
+    graphics.moveTo(CANVAS_CENTER_X - 50,CANVAS_CENTER_Y - 100);
+    graphics.lineTo(CANVAS_CENTER_X + 50,CANVAS_CENTER_Y - 100);
+    graphics.moveTo(CANVAS_CENTER_X - 50,CANVAS_CENTER_Y - 150);
+    graphics.lineTo(CANVAS_CENTER_X + 50,CANVAS_CENTER_Y - 150);
+}
+//metodo inutilizado apos alteracoes
+scene01.renderVerticalTrail = function(){
+    graphics.lineStyle(4,0xcc6633); 
     graphics.moveTo(CANVAS_CENTER_X,CANVAS_CENTER_Y);
     graphics.lineTo(CANVAS_CENTER_X,CANVAS_CENTER_Y - CANVAS_HEIGHT/2);
 }
