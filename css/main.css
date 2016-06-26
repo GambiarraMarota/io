@@ -10,9 +10,6 @@ body{
     background-color: #f3f3f3
 }
 
-.header {
-}
-
 .header figure {
     position: relative;
     top: 50%;
@@ -29,14 +26,9 @@ body{
     font-size: 3em;
 }
 
-.game {
-    background-color: ;
-}
-
 .game canvas {
     margin: 0 auto !important;
 }
-
 
 .card-profile{
     height: 300px;
@@ -45,27 +37,4 @@ body{
     width: 95%;
     margin:1.25%;
     box-sizing: border-box;
-}
-
-.card-profile:nth-child(1){
-    opacity: 1;
-}
-
-.card-profile:nth-child(2){
-    opacity: 1;
-}
-
-.card-profile:nth-child(3){
-    opacity: 1;
-}
-
-.card-profile:nth-child(4){
-    opacity: 1;
-}
-
-.card-profile:nth-child(5){
-    opacity: 1;
-}
-.card-profile:nth-child(6){
-    opacity: 1;
 }
