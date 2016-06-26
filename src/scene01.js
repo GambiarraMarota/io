@@ -1,22 +1,53 @@
 var scene01 = new Scene();
 
 scene01.create = function() {
-    this.dot = new Phaser.Circle(CANVAS_WIDTH/2, CANVAS_HEIGHT/2, 48);
+    // declarações de ponto controlado pelo jogador
+    this.dot = new Phaser.Circle(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, 48);
+    this.dot.isMoving = false;
     
-    this.tap = false;
+    // declarações de pontos objetivos
+    this.targetDotX = new Phaser.Circle(CANVAS_WIDTH - 96 , CANVAS_HEIGHT / 2, 48);
+    this.targetDotX.color = 0xff9f00;
+    this.targetDotY = new Phaser.Circle(CANVAS_WIDTH / 2, 64, 48);
+    this.targetDotY.color = 0xcc6633;
+
+    this.touchingScreen = false;
     
     // Estados de tela para essa cena
     this.currentState = 0;
-    game.input.onTap.add(this.onTap,this);
+    game.input.onDown.add(this.onTouchDown, this);
+    game.input.onUp.add(this.onTouchUp, this);
 }
 
 scene01.update = function() {	
-    // console.log("Vsf");
     // Check tap
-    if (this.tap) {
-		this.tap = false;
-		this.currentState++;
-	}
+    if (this.touchingScreen) {
+        if (!this.dot.isMoving && this.dot.contains(game.input.position.x, game.input.position.y)) {
+            this.dot.isMoving = true;
+        }
+    } else {
+        // verifica colisões com o alvo
+        if (this.currentState == 0) { // primeiro alvo: eixo x
+            if (Phaser.Circle.intersects(this.dot, this.targetDotX)) {
+                this.dot.x = CANVAS_WIDTH / 2;
+                this.dot.y = CANVAS_HEIGHT / 2;
+                this.currentState++;
+            }
+        } else if (this.currentState == 1) { // segundo alvo: eixo y
+            if (Phaser.Circle.intersects(this.dot, this.targetDotY)) {
+                this.dot.x = CANVAS_WIDTH / 2;
+                this.dot.y = CANVAS_HEIGHT / 2;
+                this.currentState++;
+            }
+        }
+    }
+    if (this.dot.isMoving) {
+        if (this.currentState == 0) {
+            this.dot.x = game.input.position.x;
+        } else if (this.currentState == 1) {
+            this.dot.y = game.input.position.y;
+        }
+    }
 }
 
 scene01.render = function() {
@@ -30,10 +61,17 @@ scene01.render = function() {
     } else if (this.currentState == 1) {
         this.renderHorizontalTrail();
         this.renderVerticalTrail();
-    }
-     else {
+    } else {
         createCartesianPlan();
+        this.finished = true;
     }
+    
+    // círculos alvo
+    graphics.lineStyle(5, this.currentState == 0 ? 0x99aabb : this.targetDotX.color);
+    graphics.drawCircle(this.targetDotX.x, this.targetDotX.y, this.targetDotX.diameter);
+    
+    graphics.lineStyle(5, this.currentState <= 1 ? 0x99aabb : this.targetDotY.color);
+    graphics.drawCircle(this.targetDotY.x, this.targetDotY.y, this.targetDotY.diameter);
     
     // renderiza o círculo que o usuário pode controlar
     graphics.lineStyle(5, 0x29abe2);
@@ -51,7 +89,12 @@ scene01.renderVerticalTrail = function(){
     graphics.moveTo(CANVAS_CENTER_X,CANVAS_CENTER_Y);
     graphics.lineTo(CANVAS_CENTER_X,CANVAS_CENTER_Y - CANVAS_HEIGHT/2);
 }
-scene01.onTap = function(){
-	this.tap = true;
-	console.log("Teste");
+
+scene01.onTouchDown = function() {
+    this.touchingScreen = true;
+}
+
+scene01.onTouchUp = function() {
+    this.touchingScreen = false;
+    this.dot.isMoving = false;
 }
