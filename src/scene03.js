@@ -4,12 +4,11 @@ var piStep1QuadOk = false;
 var piStep1RadiansAtan2;
 
 scene03.create = function(){
-    scene02.finished = true;
-    scene01.finished = true;
     this.dot = new Phaser.Circle(75+CANVAS_WIDTH/2,-75 + CANVAS_HEIGHT/2,8);
 	//this.tap = false;
     this.initialX = this.dot.x;
     this.initialY = this.dot.y;
+    this.circulo = new Phaser.Circle(this.initialX,this.initialY,200);
 
 	this.currentState = 0;
 	//game.input.onTap.add(this.onTap,this);
@@ -17,6 +16,9 @@ scene03.create = function(){
     game.input.onUp.add(this.onTouchUp, this);
     this.touchingScreen = false;
     piStep1RadiansAtan2 =0;
+    this.parte2X;
+    this.parte2Y;
+    this.retangulo = new Phaser.Rectangle(CANVAS_WIDTH + scene02.margin,CANVAS_ORIGIN_Y + scene02.margin, 100, CANVAS_HEIGHT/3 - scene02.margin);
 }
 
 scene03.input = function(){
@@ -24,15 +26,8 @@ scene03.input = function(){
         if (!this.dot.isMoving && this.dot.contains(game.input.position.x, game.input.position.y)) {
             this.dot.isMoving = true;
             //this.currentState++;
-        }
-    } else {
-        if (this.currentState == 0) {
-            
-            /*if (Phaser.Circle.intersects(this.dot, this.targetDotX)) {
-                this.dot.x = CANVAS_WIDTH / 2;
-                this.dot.y = CANVAS_HEIGHT / 2;
-                this.currentState++;
-            }*/
+        } else if (!this.circulo.isMoving && this.circulo.contains(game.input.position.x,game.input.position.y) && this.currentState == 2){
+            this.circulo.isMoving = true;
         }
     }
     if (this.dot.isMoving) {
@@ -41,11 +36,7 @@ scene03.input = function(){
                 this.dot.x = game.input.position.x;    
             }        
         } else if (this.currentState == 1) {
-            //this.dot.y = game.input.position.y;
-            //this.dot.y = Math.sin(game.input.position.y)*100+this.initialY;
-            //this.dot.x = Math.cos(game.input.position.x)*100+this.initialX;
             var tmp;
-            //tmp = Math.atan2(game.input.position.y - this.initialY, game.input.position.x - this.initialX);
             if(!piStep1QuadOk){
                 tmp = Phaser.Math.clamp(Math.atan2(game.input.position.y - this.initialY, game.input.position.x - this.initialX), -Math.PI, 0);
             } else {
@@ -56,19 +47,6 @@ scene03.input = function(){
             } else if (tmp < 0) {
                 piStep1QuadOk = false;
             }
-            /*
-            if (!piStep1QuadOk) {
-                tmp = Phaser.Math.clamp(Math.atan2(game.input.position.y, game.input.position.x), -Math.PI, 0);
-            } else {
-                tmp = Math.atan2(game.input.position.y, game.input.position.x);
-            }
-            if (tmp < -3) {
-                piStep1QuadOk = true;
-            } else if (tmp < 0) {
-                piStep1QuadOk = false;
-            }
-            */
-            console.log(tmp);
             piStep1RadiansAtan2 = tmp;
             this.dot.x = Math.cos(piStep1RadiansAtan2) * 100 + this.initialX;
             this.dot.y = Math.sin(piStep1RadiansAtan2) * 100 + this.initialY;
@@ -76,28 +54,28 @@ scene03.input = function(){
             if (piStep1QuadOk && piStep1RadiansAtan2 < .2 && piStep1RadiansAtan2 > 0) {
                 this.currentState++;
                 //pointerGrabbed = false;
+                this.dot.y = this.parte2Y;
                 this.dot.isMoving = false;
                 piTransition = true;
-            } else {
-                //this.dot.x = this.initialX;
-                //this.dot.y = this.initialY;
-                //piStep1RadiansAtan2 = 0;
-                //piStep1QuadOk = false;
-                
-                //this.currentState = 0;
             }
-        }
-    }
+        }  
+    } else if (this.circulo.isMoving){
+        this.circulo.x = game.input.position.x;
+        this.circulo.y = game.input.position.y;
+        this.circulo.diameter = 30;
+        
+        
+
+        console.log("OK");
+        //circulo.isMoving = false;
+        //circulo.radius = 
+    }    
 }
 
 scene03.update = function(){
 	this.input();
-    /*if (this.tap) {
-		this.tap = false;
-		this.currentState++;
-	}*/
 	if (this.currentState > 3) {
-		this.finished = true;
+		//this.finished = true;
 	}
 }
 
@@ -107,18 +85,12 @@ scene03.render = function(){
 	createCartesianPlan();
     this.createCoordText();
     this.drawDottedBox();
-	//if (this.currentState == 1) {
-	
-	//}
     if (this.currentState == 0){
 		this.renderHorizontalTrail();	
-	}else if (this.currentState == 1){
+	}else if (this.currentState >= 1){
 		this.renderCircle();
 	}
-	else {
-		this.finished = true;
-	}
-    this.renderDot();
+    
 }
 
 scene03.renderDot = function() {
@@ -129,29 +101,45 @@ scene03.renderDot = function() {
 }
 
 scene03.renderHorizontalTrail = function() {
+    
     graphics.lineStyle(5,0x29abe2);
     graphics.moveTo(this.initialX, this.initialY);
     graphics.lineTo(this.initialX + 100, this.initialY);
-    graphics.drawCircle(this.initialX,this.initialY,this.dot.diameter);
+    //graphics.drawCircle(this.initialX,this.initialY,this.dot.diameter);
     this.textR = game.add.text(this.initialX + this.dot.diameter/2,this.initialY + this.dot.diameter/2,"R", { font: "15px Arial", fill: "#000000", align: "center" });
+    this.renderDot();
 }
 
 scene03.renderCircle = function() {
-    graphics.lineStyle(8,0x29abe2);
-    graphics.moveTo(this.initialX, this.initialY);
-    graphics.lineTo(this.initialX + 100, this.initialY);
-    graphics.drawCircle(this.initialX,this.initialY,this.dot.diameter);
-    graphics.drawCircle(this.initialX,this.initialY,200);
+    if (this.currentState < 2){
+       graphics.lineStyle(5,0x29abe2);    
+        
+        graphics.moveTo(this.initialX, this.initialY);
+        graphics.lineTo(this.initialX + 100, this.initialY);
+        this.circuloGraphic = graphics.drawCircle(this.circulo.x,this.circulo.y,this.circulo.diameter);
+        graphics.lineStyle(8,0x000000);
+        graphics.arc(this.initialX, this.initialY, 100, 0, piStep1RadiansAtan2, true);    
+    } else if (this.currentState == 2){
+        graphics.lineStyle(3,0xFFd700);
+        if (!this.circulo.isMoving){
+            graphics.lineStyle(8,0xFFd700);    
+        }
+        this.circuloGraphic = graphics.drawCircle(this.circulo.x,this.circulo.y,this.circulo.diameter);
+    } else if (this.currentState == 3){
+        graphics.lineStyle(3,0x00FF00);
+        this.circuloGraphic = graphics.drawCircle(773,88,this.circulo.diameter);
+         console.log(this.circulo.x, this.circulo.y);
+    }
+    
     //graphics.moveTo(piStep0InitialPoint.x, piStep0InitialPoint.y);
     //graphics.lineTo(currentCursorPoint.x, currentCursorPoint.y);
     graphics.lineStyle(8,0x000000);
-    graphics.arc(this.initialX, this.initialY, 100, 0, piStep1RadiansAtan2, true);
+    
+    if (this.currentState < 2){
+        this.renderDot();
+    }
+    
 }
-
-/*scene03.onTap = function(){
-	this.tap = true;
-	console.log("Teste");
-}*/
 
 scene03.onTouchDown = function() {
     this.touchingScreen = true;
@@ -161,14 +149,27 @@ scene03.onTouchUp = function() {
     if (this.currentState == 0){
         if (game.input.position.x >= this.initialX + 100 && this.dot.isMoving){
             this.currentState++;
-        }    
+            //this.parte2X = this.initialX + 100;
+            this.parte2Y = this.dot.y;
+        } 
+    } else if (this.currentState == 2){
+        if (this.retangulo.contains(game.input.position.x,game.input.position.y)){
+            console.log("foi");
+            this.currentState++;
+        } else {
+            this.circulo.diameter = 200;
+        }
     }
     this.touchingScreen = false;
     this.dot.isMoving = false;
+    this.circulo.isMoving = false;
 }
 
-scene03.drawDottedBox = function(clicked){   
+scene03.drawDottedBox = function(){   
     graphics.lineStyle(3, 0x00FF00, 1);
+    if (this.currentState == 2){
+        graphics.lineStyle(3, 0xFFd700, 1);
+    }
     this.dottedBox = graphics.drawRect(CANVAS_WIDTH + scene02.margin,CANVAS_ORIGIN_Y + scene02.margin, 100, CANVAS_HEIGHT/3 - scene02.margin);    
 }
 
